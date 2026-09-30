@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class BudgetTest {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter your budget: ₹");
+        double budget = sc.nextDouble();
+
+        System.out.print("Enter your spending: ₹");
+        double spending = sc.nextDouble();
+
+        if (spending <= budget) {
+            System.out.println("Within Budget");
+            System.out.println("Remaining: ₹" + (budget - spending));
+        } else {
+            System.out.println("Budget Exceeded");
+            System.out.println("Extra spent: ₹" + (spending - budget));
+        }
+
+        sc.close();
+    }
+}
+Example Input:
+Enter your budget: ₹5000
+Enter your spending: ₹4200
+Output:
+Within Budget
+Remaining: ₹800
