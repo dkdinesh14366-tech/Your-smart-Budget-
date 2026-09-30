@@ -1,0 +1,11 @@
+Wait for “Generating API key” to finish.
+Open the newly created API key.
+Under API restrictions, restrict the key to Gemini API / Generative Language API only. Google recommends restricting keys rather than leaving standard keys unrestricted. �
+Google AI for Developers +1
+For a FastAPI backend, don't put the key directly in your frontend or GitHub code. Store it as an environment variable such as GEMINI_API_KEY. �
+Google AI for Developers +1
+If Google shows Access/Permission denied, your Google Cloud account needs permissions such as apikeys.keys.create, serviceusage.services.enable, and the required service-account/API-key binding permissions. �
+Google AI for Developers
+For your project, the setup should be:
+Frontend → FastAPI Backend → Gemini API
+Keep the Gemini API key only on the FastAPI backend.
