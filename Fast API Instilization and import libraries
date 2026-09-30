@@ -1,0 +1,66 @@
+pip install fastapi uvicorn
+2. Basic FastAPI initialization
+from fastapi import FastAPI
+
+app = FastAPI(
+    title="Gemini API Service",
+    description="FastAPI service for Gemini API integration",
+    version="1.0.0"
+)
+
+@app.get("/")
+async def root():
+    return {"message": "FastAPI is running"}
+
+@app.get("/health")
+async def health():
+    return {"status": "healthy"}
+3. Run the API
+uvicorn main:app --reload
+
+Then open:
+
+http://127.0.0.1:8000
+
+Interactive API documentation:
+
+http://127.0.0.1:8000/docs
+4. If you're connecting Gemini
+pip install fastapi uvicorn google-genai python-dotenv
+import os
+
+from fastapi import FastAPI
+from google import genai
+from dotenv import load_dotenv
+
+load_dotenv()
+
+app = FastAPI(title="Gemini FastAPI")
+
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+
+@app.get("/health")
+async def health():
+    return {"status": "ok", "gemini": "configured"}
+
+A typical project structure is:
+
+project/
+├── main.py
+├── .env
+└── requirements.txt
+
+.env:
+
+GEMINI_API_KEY=your_api_key_here
+
+requirements.txt:
+
+fastapi
+uvicorn[standard]
+google-genai
+python-dotenv
+
+Do not put the Gemini API key directly in your Python source code.
