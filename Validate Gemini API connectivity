@@ -1,0 +1,83 @@
+
+Validate Gemini API connectivity text and coding
+
+If you want to validate Gemini API connectivity, the cleanest test is to verify three things: API-key loading, network/API access, and an actual text-generation response.
+
+Google currently recommends the google-genai SDK and the newer Interactions API for new projects; generateContent is still supported but is now considered legacy. 
+
+Python connectivity test
+Install:
+
+pip install -U google-genai
+Set your key:
+
+export GEMINI_API_KEY="YOUR_API_KEY"
+Then run:
+
+from google import genai
+
+client = genai.Client()
+
+try:
+    response = client.models.generate_content(
+        model="gemini-3.8-flash",
+        contents="Reply with exactly: Gemini API connection successful"
+    )
+
+    print("SUCCESS")
+    print("Response:", response.text)
+
+except Exception as e:
+    print("FAILED")
+    print(type(e).__name__, ":", e)
+The SDK automatically reads GEMINI_API_KEY (or GOOGLE_API_KEY) from the environment. 
+
+JavaScript / Node.js
+npm install @google/genai
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({});
+
+async function testGemini() {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-3.8-flash",
+      contents: "Reply with exactly: Gemini API connection successful",
+    });
+
+    console.log("SUCCESS");
+    console.log("Response:", response.text);
+  } catch (error) {
+    console.error("FAILED");
+    console.error(error);
+  }
+}
+
+testGemini();
+This follows Google's current JavaScript SDK pattern. 
+
+Raw REST connectivity test
+Useful if you want to distinguish an SDK problem from an API/network problem:
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent" \
+  -H "x-goog-api-key: $GEMINI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Reply with exactly: Gemini API connection successful"
+          }
+        ]
+      }
+    ]
+  }'
+A successful response confirms that the key, endpoint, authentication, model access, and network connection are working. 
+
+Important for September 2026: Google's documentation says the Gemini API is transitioning away from standard API keys, and standard keys are scheduled to be rejected in September 2026; new AI Studio keys are auth keys. If you're testing an older key and authentication fails, check its key type/restrictions. 
+
+If by “text and coding” you mean you want a single validation script that tests both normal text generation and code-generation/analysis, I can provide that too.
+
+
