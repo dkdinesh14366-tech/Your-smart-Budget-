@@ -1,0 +1,24 @@
+Configure Access and Permissions means controlling who can access a system, file, application, or resource and what actions they are allowed to perform. Permissions may include reading, writing, editing, deleting, or executing data. In software applications, access can be configured using roles such as administrator, teacher, student, or guest. Proper permissions improve security and prevent unauthorized changes. For example, an administrator may have full access, while a student may only view information. Access control should follow the principle of giving users only the permissions required for their work.
+Java Coding
+import java.util.Scanner;
+
+public class AccessPermission {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter role: ");
+        String role = sc.nextLine();
+
+        if (role.equalsIgnoreCase("admin")) {
+            System.out.println("Access: Full Permission");
+        } else if (role.equalsIgnoreCase("teacher")) {
+            System.out.println("Access: Read and Edit");
+        } else if (role.equalsIgnoreCase("student")) {
+            System.out.println("Access: Read Only");
+        } else {
+            System.out.println("Access Denied");
+        }
+
+        sc.close();
+    }
+}
